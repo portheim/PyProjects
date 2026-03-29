@@ -89,27 +89,23 @@ def create_spend_chart(categories):
         
     #Creates the circles for each category.
     count = 0
+
     for key, value in breakdown.items():
-        for i in range(10, 0, -1):
+        for i in range(10, -1, -1):
             if i <= value:
                 if count == 0:
-                    line[11 - i] += " o"
+                    line[11 - i] += "-o"
                 else:
-                    line[11 - i] += "  o"
+                    line[11 - i] += "--o"
             else:
                 if count == 0:
-                    line[11 - i] += "  "
+                    line[11 - i] += "--"
                 else:
-                    line[11 - i] += "   "
-        
-        for j in range(len(breakdown.items())):
-            if count == 0:
-                line[11] += " o"
-            else:
-                line[11] += "  o"
-
+                    line[11 - i] += "---"
         count += 1
-        
+    
+    for i in range(10, -1, -1): #Final two spaces
+        line[11 - i] += "--"
 
 
     return '\n'.join(line[:13])
