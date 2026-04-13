@@ -2,7 +2,7 @@ import math
 
 class Category:
     registry = {}
-  
+    
     def __init__(self, name):
         self.ledger = []
         self.balance = 0
@@ -10,6 +10,7 @@ class Category:
         self.percent = 0
         self.spending = 0
         Category.registry[name] = self
+        
         
     
     def __str__(self):
@@ -57,29 +58,18 @@ class Category:
     def dict_to_table(self):
         header = '{:*^30}'.format(f'{self.name}')
     
-    @classmethod
-    def grand_total(cls):
-        return sum(cat.spending for cat in cls.registry.values())
-
-    @classmethod
-    def spending_breakdown(cls):
-        total = cls.grand_total()
-        breakdown = {}
-        for name, cat in cls.registry.items():
-            percent = round((cat.spending / total) * 10)
-            breakdown[name] = percent
-        return breakdown
-            
-
 
 def create_spend_chart(categories):
-    
+    total = sum(cat.spending for cat in categories)
+    breakdown = {cat.name: math.floor((cat.spending / total) * 10) for cat in categories}
+
+
+
     line = [''] * 14 #14 Lines for the chart
     line[0] = 'Percentage spent by category' #title
     
     #bars below graph
     line[12] = '    ' + '---' * len(breakdown.items()) + '-' 
-    
     
     #Creates the percentages down the left side.
     for i in range(11):  
@@ -87,42 +77,41 @@ def create_spend_chart(categories):
         length = len(str(percent))
         line[i+1] = (3 - length) * ' ' + f'{percent}|'
         
-    #Creates the circles for each category.
+    #Creates the circles and spaces for each bar graph
     count = 0
 
     for key, value in breakdown.items():
         for i in range(10, -1, -1):
             if i <= value:
                 if count == 0:
-                    line[11 - i] += "-o"
+                    line[11 - i] += " o"
                 else:
-                    line[11 - i] += "--o"
+                    line[11 - i] += "  o"
             else:
                 if count == 0:
-                    line[11 - i] += "--"
+                    line[11 - i] += "  "
                 else:
-                    line[11 - i] += "---"
+                    line[11 - i] += "   "
         count += 1
     
     for i in range(10, -1, -1): #Final two spaces
-        line[11 - i] += "--"
+        line[11 - i] += "  "
 
 
-    return '\n'.join(line[:13])
-            
+    #Returns the names of each category below the graph vertically 
+    names = list(breakdown.keys()) ##['Food', 'Clothing', 'Auto']
+    max_len = max(len(name) for name in names) ##8
+    name_rows = []
+    for i in range(max_len): ##Max Range 8
+        row = "     " # 5 spaces for formatting
+        for index, name in enumerate(names): ## 0:Food, 1: Clothing, 2: Auto
+            char = name[i] if i < len(name) else " "
+            row += char
+            if index < len(names) - 1:
+                row += "  "
+        row += "  "
+        name_rows.append(row)
 
-    
 
-Food = Category('Food')
-Clothing = Category('Clothing')
-Auto = Category('Auto')
-Food.deposit(1000)
-Clothing.deposit(1000)
-Auto.deposit(1000)
-Food.withdraw(75)
-Clothing.withdraw(50)
-Auto.withdraw(30)
 
-breakdown = Category.spending_breakdown()
-
-print(create_spend_chart(Category))
+    return '\n'.join(line[:13]) + '\n' + '\n'.join(name_rows)
