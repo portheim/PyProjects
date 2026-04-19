@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python square_root_bisection.py)",
+      "Bash(python -c ' *)",
+      "Bash(python -c \"import math; exec\\(open\\('square_root_bisection.py'\\).read\\(\\).split\\('print\\(square_root'\\)[0]\\); cases=[\\(81,1e-3,50\\),\\(0.25,1e-7,10\\),\\(0.001,1e-7,50\\)]; [print\\(f'sqrt\\({v}\\) tol={t}: {r:.10f}, err={abs\\(r-math.sqrt\\(v\\)\\):.2e}'\\) for v,t,i in cases for r in [square_root_bisection\\(v,t,i\\)]]\")"
+    ]
+  }
+}
