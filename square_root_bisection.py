@@ -20,17 +20,7 @@ def square_root_bisection(value, tolerance=0.1, iterations=1):
             result = mid
             low = mid
         else:
-            high = mid
-
-    for _ in range(iterations):
-        if (result + tolerance) * (result + tolerance) > value:
-            break
-        while (result + tolerance) * (result + tolerance) <= value:
-            result += tolerance
-        tolerance /= 10
-    else:
-        print(f'Failed to converge within {iterations} iterations')
-        return None
+            high = mid 
 
     print(f'The square root of {value} is approximately {result}')
     return result
