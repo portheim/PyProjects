@@ -1,7 +1,13 @@
 def square_root_bisection(value, tolerance=0.1, iterations=10):
     if value < 0:
         raise ValueError('Square root of negative number is not defined in real numbers')
-    low, high, result = 0, max(1, value), 0
+    
+    if value > 4:
+        high = value / 2
+    else:
+        high = max(1, value)    
+    
+    low, result = 0, 0
 
     if value * value == value:  #Checks for 0 or 1
         result = value
