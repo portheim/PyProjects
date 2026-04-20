@@ -1,4 +1,4 @@
-def square_root_bisection(value, tolerance=0.1, iterations=1):
+def square_root_bisection(value, tolerance=0.1, iterations=10):
     if value < 0:
         raise ValueError('Square root of negative number is not defined in real numbers')
     low, high, result = 0, max(1, value), 0
@@ -11,7 +11,7 @@ def square_root_bisection(value, tolerance=0.1, iterations=1):
     its = 0
     while high - low > tolerance:
         if its == iterations:
-            print(f'Failed to converge within {max_its} iterations')
+            print(f'Failed to converge within {iterations} iterations')
             return None
         
         mid = (low + high) / 2
