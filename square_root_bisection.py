@@ -5,7 +5,7 @@ def square_root_bisection(value, tolerance=0.1, iterations=10):
     if value > 4:
         high = value / 2
     else:
-    high = max(1, value)    
+        high = max(1, value)    
 
     low, result = 0, 0
 
@@ -33,7 +33,14 @@ def square_root_bisection(value, tolerance=0.1, iterations=10):
             high = mid 
         its += 1
 
-    print(f'The square root of {value} is approximately {result}. Done in {its} iterations.')
+    print(f'The square root of {value} is approximately {result}. Done in {its-1} iterations.')
     return result
 
-square_root_bisection(1000, 0.1, 20)
+def main():
+    number = input("Enter number to be rooted:")
+    tol = input("Enter tolerance value:")
+    it = input("Enter number of iterations:")
+    print(square_root_bisection(float(number), float(tol), int(it)))
+
+if __name__ == "__main__":
+    main()
