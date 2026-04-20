@@ -8,19 +8,18 @@ def square_root_bisection(value, tolerance=0.1, iterations=1):
         print(f'The square root of {value} is {result}')
         return result
 
-
-    max_its = iterations
     its = 0
     while high - low > tolerance:
-        if its == max_its:
+        if its == iterations:
             print(f'Failed to converge within {max_its} iterations')
             return None
         
         mid = (low + high) / 2
-        if mid * mid == value:
+        sq_mid = mid * mid
+        if sq_mid == value:
             result = mid
             break
-        if mid * mid < value:
+        if sq_mid < value:
             result = mid
             low = mid
         else:
