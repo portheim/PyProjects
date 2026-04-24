@@ -5,7 +5,7 @@ eightRegex = re.compile('^.{8,}')
 upRegex = re.compile('[A-Z]')
 lowRegex = re.compile('[a-z]')
 onedigitRegex = re.compile('[0-9]')
-specialRegex = re.compile('[!@#$%^&*()]')
+specialRegex = re.compile('[^A-Za-z0-9]')
 
 def password_check(password: str) -> bool:
     eight = eightRegex.findall(password)
@@ -21,3 +21,5 @@ def password_check(password: str) -> bool:
     else: 
         print('Password checks out.')
         return True
+
+print(password_check('0neHundr3d!'))
